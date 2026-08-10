@@ -243,25 +243,6 @@ Ansible
 Running Containers
 ```
 
-## Future Improvements
-
-Possible improvements for this project:
-
-* [ ] Deploy to a remote EC2 instance
-* [ ] Use SSH-based Ansible deployment
-* [ ] Add Ansible roles
-* [ ] Use Ansible Vault for secrets
-* [ ] Add environment-specific variables
-* [ ] Push Docker images to Amazon ECR
-* [ ] Deploy the application to AWS EC2
-* [ ] Add Jenkins/GitHub Actions CI/CD
-* [ ] Add application health checks
-* [ ] Add monitoring and logging
-* [ ] Provision infrastructure using Terraform
-
 ## Learning Goal
 
 The main goal of this project is to move from manually managing Docker applications toward **automated infrastructure and application deployment using Ansible**.
-
-It is a practice project and will evolve as additional DevOps concepts are introduced.
-
