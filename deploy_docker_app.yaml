@@ -1,0 +1,56 @@
+---
+- name: Deploying my first docker-compose project
+  hosts: webservers
+  become: true
+
+  tasks:
+    - name: Install required packages
+      apt:
+        name: 
+          - apt
+          - docker.io
+          - docker-compose-v2
+        state: present     #make sure above mentioned all is installed and present
+        update_cache: yes   #install the latest apt
+
+
+    - name: Ensure whether docker is running
+      service:
+        name: docker
+        state: started   #make sure it is running
+        enabled: true     #it will reboot whenever the server (ec2) reboots
+
+    - name: Pull the latest code
+      git:      # this are the module used by ansible to connect with the required packages
+        repo: "https://github.com/KaarthikeyanB02/Docker_Compose_Practise.git"
+        dest: "/home/kaarthikeyan/Ansible_Local_Practise/app_code"                #location in which the project will be saved  
+        version: main                                                             #use this branch code
+        force: yes                                                                #incase any code is there already it will forcefully merge with this newly pulled one
+
+
+
+    # Create .env file dynamically before docker-compose runs
+    - name: Create .env file for docker-compose
+      copy:
+        dest: "/home/kaarthikeyan/Ansible_Local_Practise/app_code/.env"
+        content: |
+          PORT=5000
+          REDIS_HOST=redis
+          REDIS_PORT=6379
+
+
+
+          #    - name: Launch the application
+          #      community.docker.docker_compose_v2:
+          #        project_src: "/home/kaarthikeyan/Ansible_Local_Practise/app_code"         #Look inside this folder for the compose.yaml file
+          #        state: present
+          #        recreate: always
+
+    - name: Stop the application
+      community.docker.docker_compose_v2:
+        project_src: "/home/kaarthikeyan/Ansible_Local_Practise/app_code"
+        state: stopped
+          
+
+
+
